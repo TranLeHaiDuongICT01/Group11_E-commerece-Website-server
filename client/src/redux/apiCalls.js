@@ -1,6 +1,6 @@
 import { publicRequest } from "../config"
 import { loginFailure, loginStart, loginSuccess } from "./userRedux"
-
+import { startFetching, getProducts, fetchingError } from "./productRedux"
 export const login = async (dispatch, user) => {
     dispatch(loginStart())
     try {
@@ -19,5 +19,14 @@ export const register = async (dispatch, user) => {
         window.location.reload()
     } catch (error) {
         dispatch(loginFailure(error?.response?.data?.msg || 'Something went wrong'))
+    }
+}
+export const getAllProducts = async (dispatch, category, color, size, sort, page) => {
+    dispatch(startFetching())
+    try {
+        const response = await publicRequest.get(`/products/all?page=${page || 1}&category=${category ? category : ''}&color=${color ? color.toLowerCase() : ''}&size=${size ? size : ''}&sort=${sort ? sort === 'newest' ? '-createdAt' : sort : ''}`)
+        dispatch(getProducts(response?.data))
+    } catch (error) {
+        dispatch(fetchingError(error?.response?.data?.msg || 'Something went wrong'))
     }
 }

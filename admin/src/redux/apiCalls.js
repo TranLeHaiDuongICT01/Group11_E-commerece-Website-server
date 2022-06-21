@@ -23,20 +23,21 @@ export const register = async (dispatch, user) => {
     }
 }
 
-export const getAllProducts = async (dispatch, category, color, size, sort) => {
+export const getAllProducts = async (dispatch, category, color, size, sort, page) => {
     dispatch(api.startFetching())
     try {
-        const response = await publicRequest.get(`/products/all?category=${category ? category : ''}&color=${color ? color.toLowerCase() : ''}&size=${size ? size : ''}&sort=${sort ? sort === 'newest' ? '-createdAt' : sort : ''}`)
+        const response = await publicRequest.get(`/products/all?page=${page || 1}&category=${category ? category : ''}&color=${color ? color.toLowerCase() : ''}&size=${size ? size : ''}&sort=${sort ? sort === 'newest' ? '-createdAt' : sort : ''}`)
         dispatch(api.getProducts(response?.data))
     } catch (error) {
         dispatch(api.fetchingError(error?.response?.data?.msg || 'Something went wrong'))
     }
 }
 export const updateProduct = async (dispatch, id, product) => {
+    const { _id, ...others } = product
     dispatch(api.startFetching())
     try {
-        const response = await userRequest.patch(`/products/product/${id}`, product)
-        dispatch(api.getProducts(response?.data))
+        const response = await userRequest.patch(`/products/product/${id}`, others)
+        dispatch(api.updateProduct(response?.data))
     } catch (error) {
         dispatch(api.fetchingError(error?.response?.data?.msg || 'Something went wrong'))
     }

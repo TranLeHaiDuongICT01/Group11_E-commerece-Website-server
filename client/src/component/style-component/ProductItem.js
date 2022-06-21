@@ -36,13 +36,6 @@ export const Image = styled.img`
     object-fit: cover;
     max-width: 75%;
 `
-export const Circle = styled.div`
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: white;
-    position: absolute;
-`
 export const Icon = styled.div`
     width: 40px;
     height: 40px;

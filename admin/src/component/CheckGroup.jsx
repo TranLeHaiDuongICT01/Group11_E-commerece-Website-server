@@ -4,7 +4,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function CheckGroup({ list, name, data, setData, clear, setClear }) {
-    const [checkedList, setCheckedList] = React.useState([... new Array(list.length).fill(false)])
+    const arr = list?.map(item => {
+        if (name === 'category') {
+            if (data.categories.indexOf(item) !== -1) return true
+        } else if (name === 'size') {
+            if (data.size.indexOf(item) !== -1) return true
+        } else if (name === 'color') {
+            if (data.color.indexOf(item) !== -1) return true
+        }
+        return false
+    })
+    const [checkedList, setCheckedList] = React.useState([...arr])
     const handleCheck = (e, i) => {
         const arr = [...checkedList]
         arr[i] = !arr[i]

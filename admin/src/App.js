@@ -5,6 +5,7 @@ import Announcement from './component/Announcement'
 import Footer from './component/Footer'
 import Navbar from './component/Navbar'
 import CreateProduct from './pages/CreateProduct'
+import EditProduct from './pages/EditProduct'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import ProductDetails from './pages/ProductDetails'
@@ -24,6 +25,7 @@ const App = () => {
             <Route exact path='/product/:id' element={!user ? <Navigate to='/login' replace /> : <ProductDetails />} />
             <Route exact path='/login' element={user ? <Navigate to='/' replace /> : <Login />} />
             <Route exact path='/products/new' element={!user ? <Navigate to='/login' replace /> : <CreateProduct />} />
+            <Route exact path='/product/edit/:id' element={!user ? <Navigate to='/login' replace /> : <EditProduct />} />
             <Route exact path='*' element={!user ? <Navigate to='/login' replace /> : <Navigate to='/' replace />} />
           </Routes>
           <Footer user={user} />

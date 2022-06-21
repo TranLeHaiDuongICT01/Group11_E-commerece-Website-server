@@ -1,10 +1,8 @@
 import { Box, Button, CardMedia, CircularProgress, Container, FormControl, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 import CheckGroup from '../component/CheckGroup'
-import userRequest, { BASE_URL } from '../config'
-import { addProduct, uploadImage } from '../redux/apiCalls'
+import { uploadImage } from '../redux/apiCalls'
 import TransitionsModal from '../component/Modal'
 const categoryList = ['man', 'woman', 'tshirt', 'jeans', 'shoes']
 const colorList = ['black', 'red', 'blue', 'white', 'yellow']
@@ -115,10 +113,10 @@ const CreateProduct = () => {
                 images?.map((image, i) => (
                   <div key={i} style={{
                     maxWidth: '200px',
-                    backgroundColor: 'pink',
+                    height: '200px',
                     border: '1px solid #ccc'
                   }}>
-                    <CardMedia component='img' sx={{ width: '100%', objectFit: 'cover', maxHeight: '700px' }} id='imageSeen' image={image} alt='' />
+                    <CardMedia component='img' sx={{ width: '100%', objectFit: 'cover', height:'100%' }} id='imageSeen' image={image} alt='' />
                     {images && images.length > 0 &&
                       <button style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer' }} onClick={handleDeleteImage}>X</button>
                     }

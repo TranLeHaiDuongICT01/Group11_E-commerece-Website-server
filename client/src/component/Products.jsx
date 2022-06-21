@@ -1,36 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ProductItem from './ProductItem'
-import { publicRequest } from '../config'
+import { Link } from 'react-router-dom'
 import { Container } from './style-component/Products'
+import { CircularProgress, Pagination, PaginationItem } from '@mui/material'
+import { useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllProducts } from '../redux/apiCalls'
 const Products = ({ category, filter, sort }) => {
 
-    const [products, setProducts] = useState([])
-    const [currentOfPage, setCurrentOfPage] = useState(1)
-    const [totalPage, setTotalPage] = useState(1)
+    const location = useLocation()
+    const dispatch = useDispatch()
+    const { products, numberOfPage, isFetching } = useSelector(state => state.product)
+    const query = new URLSearchParams(location.search)
+    const page = query?.get('page')
     useEffect(() => {
         const { color, size } = filter
-
-        const getProducts = async () => {
-            try {
-                const data = await publicRequest.get(`/products/all?category=${category ? category : ''}&color=${color ? color.toLowerCase() : ''}&size=${size ? size : ''}&sort=${sort ? sort === 'newest' ? '-createdAt' : sort : ''}`)
-                const { products, currentPage, numberOfPage } = data.data
-                setCurrentOfPage(currentPage)
-                setTotalPage(numberOfPage)
-                setProducts(products)
-            } catch (error) {
-
-            }
-        }
-        getProducts()
-    }, [category, filter, sort])
+        getAllProducts(dispatch, category, color, size, sort, page)
+    }, [category, filter, sort, page, location, dispatch])
+    if (isFetching) return <CircularProgress />
     return (
-        <Container>
-            {
-                products?.map(item => (
-                    <ProductItem key={item._id} item={item} />
-                ))
-            }
-        </Container>
+        <React.Fragment>
+            <Container>
+                {
+                    products?.map(item => (
+                        <ProductItem key={item._id} item={item} />
+                    ))
+                }
+
+            </Container>
+            <div style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '20px'
+            }}>
+                <Pagination count={numberOfPage} showFirstButton showLastButton page={Number(page) || 1}
+                    renderItem={(item) => (
+                        <PaginationItem {...item} component={Link} to={`?page=${item.page}`} />
+                    )} />
+            </div>
+        </React.Fragment>
     )
 }
 

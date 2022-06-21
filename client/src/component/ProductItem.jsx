@@ -10,7 +10,6 @@ import {
     Infor,
     Container,
     Image,
-    Circle,
     Icon
 } from './style-component/ProductItem'
 const ProductItem = ({ item }) => {
@@ -27,7 +26,6 @@ const ProductItem = ({ item }) => {
     return (
         <Container>
             <TransitionsModal text="You already add this product to cart" setOpenModal={setOpenModal} openModal={openModal} />
-            <Circle />
             <Image src={item.images[0]?.url} />
             <Infor>
                 <Icon onClick={handleAddToCart}>

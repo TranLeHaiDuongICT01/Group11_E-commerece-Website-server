@@ -6,7 +6,6 @@ const productSlice = createSlice({
         products: [],
         isFetching: false,
         error: false,
-        currentPage: 1,
         numberOfPage: 1
     },
     reducers: {
@@ -18,24 +17,7 @@ const productSlice = createSlice({
             state.isFetching = false
             state.error = false
             state.products = action.payload.products
-            state.currentPage = action.payload.currentPage
             state.numberOfPage = action.payload.numberOfPage
-        },
-        deleteProduct: (state, action) => {
-            state.isFetching = false
-            state.error = false
-            state.products = state.products.filter(product => product._id !== action.payload._id)
-        },
-        addProduct: (state, action) => {
-            state.isFetching = false
-            state.error = false
-            state.products.push(action.payload)
-        },
-        updateProduct: (state, action) => {
-            state.isFetching = false
-            state.error = false
-            state.products = state.products.map(product => product._id === action.payload._id ? action.payload : product)
-            console.log(state.products);
         },
         fetchingError: (state, action) => {
             state.isFetching = false
@@ -50,5 +32,5 @@ const productSlice = createSlice({
         }
     }
 })
-export const { startFetching, getProducts, deleteProduct, addProduct, updateProduct, fetchingError, resetError, endFetching } = productSlice.actions
+export const { startFetching, getProducts, fetchingError, resetError, endFetching } = productSlice.actions
 export default productSlice.reducer
