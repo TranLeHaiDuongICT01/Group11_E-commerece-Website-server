@@ -1,6 +1,9 @@
 import AUTUMN from './images/AUTUMN COLLECTION.png'
-// import LOVE from './images/LOUNGEWEAR LOVE.png'
-// import JORDAN from './images/airjordan.jpeg'
+import SHIRTS from './images/SHIRTS.jpg'
+import JEANS from './images/JEANS.jpg'
+import SHOES from './images/SHOES.jpg'
+import MAN from './images/MEN.jpg'
+import WOMAN from './images/WOMAN.jpg'
 export const sliderItems = [
     {
         id: 1,
@@ -12,7 +15,7 @@ export const sliderItems = [
     },
     {
         id: 2,
-        img: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/6744427b6f794625bb01ae42016837d1_9366/Love_Unites_Trefoil_Tee_(Gender_Neutral)_White_HC3076_21_model.jpg",
+        img: SHIRTS,
         title: "SHIRTS",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
         bg: "edeff0",
@@ -21,7 +24,7 @@ export const sliderItems = [
     {
         id: 3,
         title: "JEANS",
-        img: "https://threadcurve.com/wp-content/uploads/2021/06/1-man-woman-wearing-jeans-June282021-1.jpg",
+        img: JEANS,
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
         bg: "dadde6",
         url: "jeans"
@@ -29,7 +32,7 @@ export const sliderItems = [
     {
         id: 4,
         title: "SHOES",
-        img: "https://assets.adidas.com/images/w_600,f_auto,q_auto/ce8a6f3aa6294de988d7abce00c4e459_9366/Breaknet_Shoes_White_FX8707_01_standard.jpg",
+        img: SHOES,
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
         bg: "edeff0",
         url: "shoes"
@@ -40,14 +43,14 @@ export const categories = [
     {
         id: 1,
         // img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        img: "https://pbs.twimg.com/media/Dp4ZemsWwAEzc4R?format=jpg&name=medium",
+        img: MAN,
         title: "MEN STYLE",
         category: "man"
     },
     {
         id: 2,
         // img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        img: "https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/02/20/12/lfwstreetstyle2002j.jpg?width=1200&auto=webp&quality=75",
+        img: WOMAN,
         title: "WOMAN  STYLE",
         category: "woman"
     },

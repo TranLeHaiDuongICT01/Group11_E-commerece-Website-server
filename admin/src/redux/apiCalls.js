@@ -32,12 +32,13 @@ export const getAllProducts = async (dispatch, category, color, size, sort, page
         dispatch(api.fetchingError(error?.response?.data?.msg || 'Something went wrong'))
     }
 }
-export const updateProduct = async (dispatch, id, product) => {
+export const updateProduct = async (dispatch, id, product, setOpenModal) => {
     const { _id, ...others } = product
     dispatch(api.startFetching())
     try {
         const response = await userRequest.patch(`/products/product/${id}`, others)
         dispatch(api.updateProduct(response?.data))
+        setOpenModal(true)
     } catch (error) {
         dispatch(api.fetchingError(error?.response?.data?.msg || 'Something went wrong'))
     }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Announcement from './component/Announcement'
@@ -13,8 +13,13 @@ import Register from './pages/Register'
 import Success from './pages/Success'
 import userRequest from './config'
 import { getUserCart } from './redux/cartRedux'
+import { logout } from './redux/userRedux'
+import OrderHistory from './pages/OrderHistory'
+import OrderDetail from './pages/OrderDetail'
+
+let logoutTimer;
 const App = () => {
-  const { currentUser: user, isFetching } = useSelector(state => state.user)
+  const { currentUser: user, isFetching, loginDate } = useSelector(state => state.user)
   const cart = useSelector(state => state.cart)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -36,6 +41,16 @@ const App = () => {
       updateCart()
     }
   }, [cart, user])
+
+  const logoutFunc = useCallback(() => {
+    dispatch(logout())
+  }, [])
+  useEffect(() => {
+    if (loginDate) {
+      const remainingTime = new Date(loginDate).getTime() - new Date().getTime()
+      logoutTimer = setTimeout(logoutFunc, remainingTime);
+    } else clearTimeout(logoutTimer)
+  }, [])
   return (
     <div style={{ position: 'relative' }}>
       <Router>
@@ -51,6 +66,12 @@ const App = () => {
             } />
             <Route exact path='/register' element={
               user ? <Navigate to='/' replace /> : <Register />
+            } />
+            <Route exact path='/history' element={
+              user ? <OrderHistory /> : <Navigate to='/' replace />
+            } />
+            <Route exact path='/order/:id' element={
+              user ? <OrderDetail /> : <Navigate to='/' replace />
             } />
             <Route exact path='/cart' element={<Cart />} />
             <Route exact path='/success' element={<Success />} />

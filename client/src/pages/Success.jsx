@@ -108,7 +108,6 @@ const Success = () => {
                 </tr>
               </tbody>
             </table>
-
           </Container>
         </Container>
       }

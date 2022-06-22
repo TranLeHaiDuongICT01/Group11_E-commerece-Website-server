@@ -65,7 +65,7 @@ const Navbar = () => {
                         <MenuItem onClick={handleLogout}>
                             <Link className='nav-menu-link' to='/'>Logout</Link>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={() => setClicked(false)}>
                             <Link className='nav-menu-link' to='/history'>Order History</Link>
                         </MenuItem>
                     </>

@@ -30,14 +30,6 @@ exports.getUserOrders = async (req, res, next) => {
     }
 }
 
-exports.getAllOrders = async (req, res, next) => {
-    try {
-
-    } catch (error) {
-        return res.status(500).json({ msg: error.message || 'Something went wrong' })
-    }
-}
-
 exports.getMonthlyIncome = async (req, res, next) => {
     const date = new Date()
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1))

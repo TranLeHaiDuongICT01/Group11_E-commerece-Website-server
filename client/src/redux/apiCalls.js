@@ -1,6 +1,7 @@
-import { publicRequest } from "../config"
+import userRequest, { publicRequest } from "../config"
 import { loginFailure, loginStart, loginSuccess } from "./userRedux"
 import { startFetching, getProducts, fetchingError } from "./productRedux"
+import * as orderApi from './orderRedux';
 export const login = async (dispatch, user) => {
     dispatch(loginStart())
     try {
@@ -28,5 +29,15 @@ export const getAllProducts = async (dispatch, category, color, size, sort, page
         dispatch(getProducts(response?.data))
     } catch (error) {
         dispatch(fetchingError(error?.response?.data?.msg || 'Something went wrong'))
+    }
+}
+
+export const getUserOrder = async (dispatch) => {
+    dispatch(orderApi.startFetching())
+    try {
+        const response = await userRequest.get('/orders/userorder');
+        dispatch(orderApi.getOrders(response?.data));
+    } catch (error) {
+        dispatch(orderApi.fetchingError(error?.response?.data?.msg || 'Something went wrong'))
     }
 }

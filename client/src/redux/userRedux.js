@@ -5,7 +5,8 @@ const userSlice = createSlice({
     initialState: {
         currentUser: null,
         isFetching: false,
-        error: false
+        error: false,
+        loginDate: null
     },
     reducers: {
         loginStart: (state) => {
@@ -16,6 +17,7 @@ const userSlice = createSlice({
             state.isFetching = false
             state.currentUser = action.payload
             state.error = false
+            state.loginDate = new Date(new Date().getTime() + 1000 * 60 * 60 * 3);
         },
         loginFailure: (state, action) => {
             state.isFetching = false
@@ -30,5 +32,5 @@ const userSlice = createSlice({
 
     }
 })
-export const { logout, loginStart, loginSuccess, loginFailure, resetError} = userSlice.actions
+export const { logout, loginStart, loginSuccess, loginFailure, resetError } = userSlice.actions
 export default userSlice.reducer

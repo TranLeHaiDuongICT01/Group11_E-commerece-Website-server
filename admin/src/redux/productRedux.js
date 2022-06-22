@@ -35,7 +35,6 @@ const productSlice = createSlice({
             state.isFetching = false
             state.error = false
             state.products = state.products.map(product => product._id === action.payload._id ? action.payload : product)
-            console.log(state.products);
         },
         fetchingError: (state, action) => {
             state.isFetching = false

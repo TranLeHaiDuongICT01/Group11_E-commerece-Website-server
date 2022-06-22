@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import CheckGroup from '../component/CheckGroup'
 import TransitionsModal from '../component/Modal'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { Error } from './style-component/Login'
 import { resetError } from '../redux/productRedux'
 import { updateProduct } from '../redux/apiCalls'
@@ -12,6 +12,7 @@ const colorList = ['black', 'red', 'blue', 'white', 'yellow']
 const sizeList = ['XS', 'S', 'M', 'L', 'XL']
 const EditProduct = () => {
     const dispatch = useDispatch()
+    const location = useLocation()
     const { id } = useParams()
     const { isFetching, products, error } = useSelector(state => state.product)
     const findProduct = products?.find(p => p._id === id)
@@ -26,13 +27,12 @@ const EditProduct = () => {
         if (data.categories.length === 0) return alert('Please one choose category')
         if (data.size.length === 0) return alert('Please one choose size')
         if (data.color.length === 0) return alert('Please one choose color')
-        updateProduct(dispatch, data._id, data)
-        if (!error) setOpenModal(true)
+        updateProduct(dispatch, data._id, data, setOpenModal)
     }
     useEffect(() => {
         if (error)
             dispatch(resetError())
-    }, [dispatch])
+    }, [location])
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
@@ -49,6 +49,10 @@ const EditProduct = () => {
         <Container sx={{ marginTop: '20px' }}>
             <TransitionsModal text='Update product successfully' openModal={openModal} setOpenModal={setOpenModal} />
             <Paper elevation={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px', marginTop: '20px', padding: '20px' }}>
+                {
+                    error &&
+                    <Error>{error}</Error>
+                }
                 <Typography variant='h5'>Create Product</Typography>
                 <Box sx={{ width: '100%' }}>
                     <form onSubmit={handleSubmit} component={FormControl} style={{
@@ -83,10 +87,6 @@ const EditProduct = () => {
                                 ))
                             }
                         </div>
-                        {
-                            error &&
-                            <Error>{error}</Error>
-                        }
                         <Button variant='contained' type='submit' color='primary' fullWidth>Update</Button>
                         <Button variant='contained' color='error' onClick={handleClear} fullWidth>Clear</Button>
                     </form>

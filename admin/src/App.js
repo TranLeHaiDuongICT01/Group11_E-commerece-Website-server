@@ -1,6 +1,6 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import React, { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import Announcement from './component/Announcement'
 import Footer from './component/Footer'
 import Navbar from './component/Navbar'
@@ -10,9 +10,20 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import ProductDetails from './pages/ProductDetails'
 import ProductList from './pages/ProductList'
-
+import { logout } from './redux/userRedux'
+let logoutTimer;
 const App = () => {
-  const { currentUser: user } = useSelector(state => state.user)
+  const { currentUser: user, loginDate } = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  const logoutFunc = useCallback(() => {
+    dispatch(logout())
+  }, [])
+  useEffect(() => {
+    if (loginDate) {
+      const remainingTime = new Date(loginDate).getTime() - new Date().getTime()
+      logoutTimer = setTimeout(logoutFunc, remainingTime);
+    } else  clearTimeout(logoutTimer)
+  }, [])
   return (
     <div style={{ position: 'relative' }}>
       <Router>
