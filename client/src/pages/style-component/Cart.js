@@ -61,9 +61,11 @@ export const ProductDetail = styled.div`
 `;
 export const ImageContainer = styled.div`
     width: 40%;
+    padding: 10px;
 `
 export const Image = styled.img`
   width: 100%;
+  max-width: 100px;
 `;
 
 export const Details = styled.div`
