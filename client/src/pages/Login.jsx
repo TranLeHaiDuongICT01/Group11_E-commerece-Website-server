@@ -16,7 +16,6 @@ import {
     Link,
     Error
 } from './style-component/Login'
-
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '', password: ''

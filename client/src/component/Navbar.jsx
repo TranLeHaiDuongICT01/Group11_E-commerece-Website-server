@@ -68,6 +68,15 @@ const Navbar = () => {
                         <MenuItem onClick={() => setClicked(false)}>
                             <Link className='nav-menu-link' to='/history'>Order History</Link>
                         </MenuItem>
+                        {/* <MenuItem>
+                            <p>
+                                <i className="far fa-address-card"></i>&nbsp; {userAddress}
+                            </p>
+                            <p>
+                                <i className="fas fa-piggy-bank"></i>&nbsp;
+                                {(userBalance / 1000000).toLocaleString("en-US")} ꜩ
+                            </p>
+                        </MenuItem> */}
                     </>
                 }
             </Menu>
