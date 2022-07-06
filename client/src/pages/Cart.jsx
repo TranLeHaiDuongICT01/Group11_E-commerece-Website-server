@@ -162,21 +162,8 @@ const Cart = () => {
           console.log(error);
         }
       };
-    const getMemory = async() => {
-        InMemorySigner.fromSecretKey('edskRct6PKTooCVi5BxjybuVkAL3YKrcKV5TXEdd2p13557TN81VhpjsXJTWxfPVMBjQYgHCtKFzZafhxPibDasNuzGPQusJjL')
-        .then((theSigner) => {
-            Tezos.setProvider({ signer: theSigner });
-            //We can access the public key hash
-            return Tezos.signer.publicKeyHash();
-        })
-        .then((publicKeyHash) => {
-            console.log(`The public key hash associated is: ${publicKeyHash}.`);
-        })
-        .catch((error) => console.log(`Error: ${error} ${JSON.stringify(error, null, 2)}`));
-    }
     const payXTZ = async(total) => {
         await connectWallet();
-        // await getMemory();
         const priceJSON = await (await fetch("https://min-api.cryptocompare.com/data/price?fsym=XTZ&tsyms=BTC,USD,EUR")).json()
         const xtzToUsd = priceJSON.USD;
         const amount = Math.round(total/xtzToUsd);
@@ -189,7 +176,14 @@ const Cart = () => {
             console.log(`Waiting for ${op.opHash} to be confirmed...`);
             return op.confirmation(1).then(() => op.opHash);
         })
-        .then((hash) => console.log(`Operation injected: https://ithaca.tzstats.com/${hash}`))
+        .then((hash) => {
+            console.log(`Operation injected: https://ithaca.tzstats.com/${hash}`)
+            navi('/success', {
+                state: {
+                    cart: cart
+                }
+            })
+        })
         .catch((error) => console.log(`Error: ${JSON.stringify(error, null, 2)}`));
         }
     return (

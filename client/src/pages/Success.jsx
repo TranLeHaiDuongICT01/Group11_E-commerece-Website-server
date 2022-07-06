@@ -27,12 +27,12 @@ const Success = () => {
           amount: cart?.total,
           address: {
             name: data?.address?.recipient_name || data?.billing_details?.name ||currentUser?.name,
-            line1: data?.address?.line1 || data?.billing_details?.address?.line1 || '',
-            city: data?.address?.city || data?.billing_details?.address?.city || '',
-            postal_code: data?.address?.postal_code || data?.billing_details?.address?.postal_code || '',
-            country_code: data?.address?.country_code || data?.payment_method_details?.card?.country
+            line1: data?.address?.line1 || data?.billing_details?.address?.line1 || '19 Los Angeles',
+            city: data?.address?.city || data?.billing_details?.address?.city || 'Los Angeles',
+            postal_code: data?.address?.postal_code || data?.billing_details?.address?.postal_code || '123',
+            country_code: data?.address?.country_code || data?.payment_method_details?.card?.country || '456'
           },
-          paymentMethod: data?.payment_method_details?.card?.brand || 'paypal'
+          paymentMethod: data?.payment_method_details?.card?.brand || data ? "paypal" : "coin"
         })
         setOrder(response?.data)
         dispatch(emptyCart())
@@ -40,7 +40,7 @@ const Success = () => {
         console.log(error);
       }
     }
-    data && createOrder();
+    createOrder();
     window.history.replaceState({}, document.title)
   }, [cart, data, currentUser, dispatch])
   useEffect(() => {
@@ -78,7 +78,7 @@ const Success = () => {
                   <td>{order?.address?.line1 || ''} - {order?.address?.city || ''}</td>
                   <td>{order?.address?.postal_code || ''}</td>
                   <td>{order?.address?.country_code || order?.payment_method_details?.card?.country || ''}</td>
-                  <td>{order?.payment_method_details?.card?.brand || 'Paypal'}</td>
+                  <td>{order?.payment_method_details?.card?.brand || data ? 'Paypal' : "XTZ"}</td>
                 </tr>
               </tbody>
             </table>
