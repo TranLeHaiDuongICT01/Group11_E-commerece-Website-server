@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import { Button, CircularProgress, Container, Typography } from '@mui/material'
+import { Button, Container, Typography } from '@mui/material'
 
 const OrderDetail = () => {
     const { orders } = useSelector(state => state.order)
