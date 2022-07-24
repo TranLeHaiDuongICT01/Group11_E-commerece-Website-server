@@ -28,14 +28,15 @@ const ConnectButton = ({
     try {
       await wallet.requestPermissions({
         network: {
-          type: NetworkType.ITHACANET,
-          rpcUrl: "https://ithacanet.ecadinfra.com"
+          type: NetworkType.JAKARTANET,
+          rpcUrl: "https://jakartanet.ecadinfra.com"
         }
       });
       // gets user's address
       const userAddress = await wallet.getPKH();
       await setup(userAddress);
       setBeaconConnection(true);
+      console.log(wallet)
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +48,7 @@ const ConnectButton = ({
       // creates a wallet instance
       const wallet = new BeaconWallet({
         name: "Taquito Boilerplate",
-        preferredNetwork: NetworkType.HANGZHOUNET,
+        preferredNetwork: NetworkType.JAKARTANET,
         disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
         eventHandlers: {
           // To keep the pairing alert, we have to add the following default event handlers back

@@ -49,7 +49,7 @@ import { InMemorySigner } from '@taquito/signer';
 const KEY = process.env.REACT_APP_STRIPE;
 const Cart = () => {
     const [Tezos, setTezos] = useState(
-        new TezosToolkit("https://ithacanet.ecadinfra.com")
+        new TezosToolkit("https://rpc.ghostnet.teztnets.xyz")
       );
     const [publicToken, setPublicToken] = useState("");
     const [wallet, setWallet] = useState(null);
@@ -150,8 +150,8 @@ const Cart = () => {
         try {
           await wallet.requestPermissions({
             network: {
-              type: NetworkType.ITHACANET,
-              rpcUrl: "https://ithacanet.ecadinfra.com"
+              type: NetworkType.CUSTOM,
+              rpcUrl: "	https://rpc.ghostnet.teztnets.xyz"
             }
           });
           // gets user's address
