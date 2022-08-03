@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Container, Typography } from '@mui/material'
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserOrder } from '../redux/apiCalls'

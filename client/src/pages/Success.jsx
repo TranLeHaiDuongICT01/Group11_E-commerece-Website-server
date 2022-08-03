@@ -105,6 +105,7 @@ const Success = () => {
                 }
                 <tr>
                   <td colSpan="4">Total = ${cart?.total}</td>
+                  <td colSpan="4">Total(XTZ) = ${cart?.total_tez}</td>
                 </tr>
               </tbody>
             </table>

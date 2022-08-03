@@ -17,11 +17,21 @@ const ProductItem = ({ item }) => {
     const navi = useNavigate()
     const cart = useSelector(state => state.cart)
     const dispatch = useDispatch()
-    const handleAddToCart = () => {
+    const fetchPrice = async () => {
+        const priceJSON = await (
+            await fetch(
+                "https://min-api.cryptocompare.com/data/price?fsym=XTZ&tsyms=BTC,USD,EUR"
+            )
+            ).json();
+            const xtzToUsd = priceJSON.USD;
+            return xtzToUsd;
+    }
+    const handleAddToCart = async() => {
         if (cart?.products?.findIndex(ele => ele?._id === item._id) !== -1) {
             return setOpenModal(true)
         }
-        dispatch(addProduct({ ...item, quantity: 1 }))
+        const xtzPrice = await fetchPrice();
+        dispatch(addProduct({ ...item, quantity: 1, xtzPrice }))
     }
     return (
         <Container>

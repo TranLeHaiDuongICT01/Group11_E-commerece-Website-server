@@ -1,13 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import { Button, CircularProgress, Container, Typography } from '@mui/material'
-
+import { Button, Container, Typography } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router-dom'
 const OrderDetail = () => {
     const { orders } = useSelector(state => state.order)
     const { products } = useSelector(state => state.product)
     const { currentUser } = useSelector(state => state.user)
     const { id } = useParams()
+    const location = useLocation()
+    const data = location?.state?.stripeData
     const order = orders.find(o => o._id === id)
     return (
         order ? (
@@ -30,7 +32,7 @@ const OrderDetail = () => {
                                 <td>{order?.address?.line1 || ''} - {order?.address?.city || ''}</td>
                                 <td>{order?.address?.postal_code || ''}</td>
                                 <td>{order?.address?.country_code || order?.payment_method_details?.card?.country || ''}</td>
-                                <td>{order?.payment_method_details?.card?.brand || 'Paypal'}</td>
+                                <td>{order?.payment_method_details?.card?.brand || data ? 'Paypal' : "XTZ"}</td>
                             </tr>
                         </tbody>
                     </table>
