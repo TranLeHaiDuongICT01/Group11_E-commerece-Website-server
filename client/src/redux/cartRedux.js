@@ -1,25 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
         products: [],
         quantity: 0,
-        total: 0
+        total: 0,
+        total_tez: 0,
     },
     reducers: {
         addProduct: (state, action) => {
             state.quantity += 1
             state.products.push(action.payload)
             state.total += action.payload.price * action.payload.quantity
+            state.total_tez = Math.round(state.total / action.payload.xtzPrice)
         },
         deleteProduct: (state, action) => {
             state.quantity -= 1
             state.products = state.products.filter(product => product._id !== action.payload.productId)
             state.total -= action.payload.amount
+            state.total_tez = Math.round(state.total / action.payload.xtzPrice)
         },
         updateCartProduct: (state, action) => {
             state.total += action.payload.amount
+            state.total_tez = Math.round(state.total / action.payload.xtzPrice)
             state.products = state.products.map(product => {
                 if (product?._id === action.payload.productId) {
                     const updateProduct = {
@@ -38,6 +43,7 @@ const cartSlice = createSlice({
         },
         emptyCart: (state) => {
             state.total = 0
+            state.total_tez = 0
             state.quantity = 0
             state.products = []
         }
