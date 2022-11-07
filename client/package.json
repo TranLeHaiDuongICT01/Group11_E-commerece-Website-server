@@ -24,6 +24,7 @@
     "react-scripts": "5.0.1",
     "react-stripe-checkout": "^2.6.3",
     "redux-persist": "^6.0.0",
+    "source-map-loader": "^4.0.1",
     "styled-components": "^5.3.5"
   },
   "scripts": {

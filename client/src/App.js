@@ -44,7 +44,7 @@ const App = () => {
 
   const logoutFunc = useCallback(() => {
     dispatch(logout())
-  }, [])
+  }, [dispatch])
   useEffect(() => {
     if (loginDate) {
       const remainingTime = new Date(loginDate).getTime() - new Date().getTime()
