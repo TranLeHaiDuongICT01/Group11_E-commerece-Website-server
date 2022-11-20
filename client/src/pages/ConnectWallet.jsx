@@ -3,9 +3,9 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import {
   NetworkType,
   BeaconEvent,
-  defaultEventCallbacks
+  defaultEventCallbacks,
 } from "@airgap/beacon-sdk";
-import { loginFailure, loginSuccess, resetError } from '../redux/userRedux'
+import { loginFailure, loginSuccess, resetError } from "../redux/userRedux";
 
 const ConnectButton = ({
   Tezos,
@@ -14,9 +14,8 @@ const ConnectButton = ({
   setUserBalance,
   setBeaconConnection,
   setPublicToken,
-  wallet
+  wallet,
 }) => {
-
   const setup = async (userAddress) => {
     setUserAddress(userAddress);
     // updates balance
@@ -29,19 +28,18 @@ const ConnectButton = ({
       await wallet.requestPermissions({
         network: {
           type: NetworkType.JAKARTANET,
-          rpcUrl: "https://jakartanet.ecadinfra.com"
-        }
+          rpcUrl: "https://jakartanet.ecadinfra.com",
+        },
       });
       // gets user's address
       const userAddress = await wallet.getPKH();
       await setup(userAddress);
       setBeaconConnection(true);
-      console.log(wallet)
+      console.log(wallet);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     (async () => {
@@ -53,12 +51,12 @@ const ConnectButton = ({
         eventHandlers: {
           // To keep the pairing alert, we have to add the following default event handlers back
           [BeaconEvent.PAIR_INIT]: {
-            handler: defaultEventCallbacks.PAIR_INIT
+            handler: defaultEventCallbacks.PAIR_INIT,
           },
           [BeaconEvent.PAIR_SUCCESS]: {
-            handler: data => setPublicToken(data.publicKey)
-          }
-        }
+            handler: (data) => setPublicToken(data.publicKey),
+          },
+        },
       });
       Tezos.setWalletProvider(wallet);
       setWallet(wallet);

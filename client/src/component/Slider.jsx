@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
-import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
-import { sliderItems } from '../data';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
+import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
+import { sliderItems } from "../data";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Arrow,
@@ -13,23 +13,23 @@ import {
   InfoContainer,
   Title,
   Desc,
-  Button
-} from './style-component/Slider'
+  Button,
+} from "./style-component/Slider";
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [changeSlide, setChangeSlide] = useState(false);
-  const navi = useNavigate()
+  const navi = useNavigate();
   const handleClick = (direction) => {
-    setChangeSlide(true)
-    const slides = sliderItems.length - 1
+    setChangeSlide(true);
+    const slides = sliderItems.length - 1;
     if (direction === "left") {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slides);
     } else {
       setSlideIndex(slideIndex < slides ? slideIndex + 1 : 0);
     }
     setTimeout(() => {
-      setChangeSlide(false)
-    }, 0)
+      setChangeSlide(false);
+    }, 0);
   };
 
   return (
@@ -46,7 +46,9 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button onClick={() => navi(`/products?category=${item.url}`)}>SHOW NOW</Button>
+              <Button onClick={() => navi(`/products?category=${item.url}`)}>
+                SHOW NOW
+              </Button>
             </InfoContainer>
           </Slide>
         ))}

@@ -45,25 +45,29 @@ import {
   BeaconEvent,
   defaultEventCallbacks,
 } from "@airgap/beacon-sdk";
-import { InMemorySigner } from "@taquito/signer";
+// import { InMemorySigner } from "@taquito/signer";
 const KEY = process.env.REACT_APP_STRIPE;
 const Cart = () => {
-    const [Tezos, setTezos] = useState(
-        new TezosToolkit("https://rpc.ghostnet.teztnets.xyz")
-      );
-    const [publicToken, setPublicToken] = useState("");
-    const [wallet, setWallet] = useState(null);
-    const [userAddress, setUserAddress] = useState("");
-    const [userBalance, setUserBalance] = useState(0);
-    const [beaconConnection, setBeaconConnection] = useState(false);
-
+  const [Tezos, setTezos] = useState(
+    new TezosToolkit("https://rpc.ghostnet.teztnets.xyz")
+  );
+  const [publicToken, setPublicToken] = useState("");
+  const [wallet, setWallet] = useState(null);
+  const [userAddress, setUserAddress] = useState("");
+  const [userBalance, setUserBalance] = useState(0);
+  const [beaconConnection, setBeaconConnection] = useState(false);
+  console.log("publicToken", publicToken);
+  console.log("userAddress", userAddress);
+  console.log("userBalance", userBalance);
+  console.log("userBalance", userBalance);
+  console.log("beaconConnection", beaconConnection);
   const cart = useSelector((state) => state.cart);
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navi = useNavigate();
-  const addQuantity = async(productId, price, quantity, currentQuantity) => {
+  const addQuantity = async (productId, price, quantity, currentQuantity) => {
     if (currentQuantity === 10) return;
-    const xtzPrice = await fetchPrice()
+    const xtzPrice = await fetchPrice();
     dispatch(
       updateCartProduct({
         productId,
@@ -78,9 +82,9 @@ const Cart = () => {
     height: "16px",
     verticalAlign: "middle",
   };
-  const minusQuantity = async(productId, price, quantity, currentQuantity) => {
+  const minusQuantity = async (productId, price, quantity, currentQuantity) => {
     if (currentQuantity === 1) return;
-    const xtzPrice = await fetchPrice()
+    const xtzPrice = await fetchPrice();
     dispatch(
       updateCartProduct({
         productId,
@@ -112,6 +116,13 @@ const Cart = () => {
     stripeToken && makeRequest();
   }, [stripeToken, navi, cart]);
 
+  const setup = async (userAddress) => {
+    setUserAddress(userAddress);
+    // updates balance
+    const balance = await Tezos.tz.getBalance(userAddress);
+    setUserBalance(balance.toNumber());
+  };
+
   useEffect(() => {
     (async () => {
       // creates a wallet instance
@@ -139,27 +150,20 @@ const Cart = () => {
         setBeaconConnection(true);
       }
     })();
-  }, []);
-
-  const setup = async (userAddress) => {
-    setUserAddress(userAddress);
-    // updates balance
-    const balance = await Tezos.tz.getBalance(userAddress);
-    setUserBalance(balance.toNumber());
-  };
+  }, [Tezos]);
 
   const fetchPrice = async () => {
     const priceJSON = await (
-        await fetch(
-            "https://min-api.cryptocompare.com/data/price?fsym=XTZ&tsyms=BTC,USD,EUR"
-        )
-        ).json();
-        const xtzToUsd = priceJSON.USD;
-        return xtzToUsd;
-}
+      await fetch(
+        "https://min-api.cryptocompare.com/data/price?fsym=XTZ&tsyms=BTC,USD,EUR"
+      )
+    ).json();
+    const xtzToUsd = priceJSON.USD;
+    return xtzToUsd;
+  };
 
-  const handleDelete = async(productId, quantity, price) => {
-    const xtzPrice = await fetchPrice()
+  const handleDelete = async (productId, quantity, price) => {
+    const xtzPrice = await fetchPrice();
     dispatch(
       deleteProduct({
         productId,
@@ -318,7 +322,14 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total_tez">
               <SummaryItemText>Total(XTZ)</SummaryItemText>
-              <SummaryItemPrice><img style={mystyle}src="https://objkt.com/assets/XTZ.svg"/> {cart?.total_tez}</SummaryItemPrice>
+              <SummaryItemPrice>
+                <img
+                  style={mystyle}
+                  src="https://objkt.com/assets/XTZ.svg"
+                  alt=""
+                />{" "}
+                {cart?.total_tez}
+              </SummaryItemPrice>
             </SummaryItem>
             {cart?.total && cart?.total > 0 && currentUser && (
               <div className="checkout-container">
