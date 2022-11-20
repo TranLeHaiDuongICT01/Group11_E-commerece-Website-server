@@ -1,4 +1,4 @@
-## Available Scripts
+## Description
 
 Server for handling requests from user/admin, connecting to database. 
 

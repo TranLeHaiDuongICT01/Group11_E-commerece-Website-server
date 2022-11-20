@@ -1,5 +1,4 @@
-## Available Scripts
-
+## Description
 Client interface for user interaction. 
 
 ## Available Scripts
